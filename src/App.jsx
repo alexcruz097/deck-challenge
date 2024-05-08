@@ -31,8 +31,24 @@ function App() {
       setCards([...cards, data.data.cards[0].image]);
 
       // set card remaining
-      setCardRemaining(data.data.remaining)
+      setCardRemaining(data.data.remaining);
       console.log(cardRemaining)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // shuffle deck
+  const shuffleDeck = async () => {
+    try {
+      const data = await axios.get(
+        `https://deckofcardsapi.com/api/deck/${deckID}/shuffle/
+
+    `
+      );
+      // clear card id
+      setCards([]);
+
     } catch (error) {
       console.error(error);
     }
@@ -41,12 +57,13 @@ function App() {
   return (
     <>
       <button onClick={drawDeck}>Game a Card</button>
+      <button type="button" onClick={shuffleDeck}>
+        Shuffle deck
+      </button>
       <div className="cards-container">
-        {
-          cards.map((img)=>{
-            return <img src={img}/>
-          })
-        }
+        {cards.map((img) => {
+          return <img src={img} />;
+        })}
       </div>
     </>
   );
